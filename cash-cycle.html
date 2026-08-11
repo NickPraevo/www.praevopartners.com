@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Work out your cash cycle &mdash; Praevo Partners</title>
-<meta name="description" content="Six numbers, thirty seconds. Work out how much cash your inventory cycle is holding, and what shortening it releases. A free tool from Praevo Partners — fractional CFOs and growth advisors for DTC and e-commerce brands.">
+<meta name="description" content="Six numbers, thirty seconds. Work out how much cash your inventory cycle is holding, and what shortening it releases. A free tool from Praevo Partners — fractional CFOs and growth advisors for consumer brands.">
 <meta name="theme-color" content="#101013">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23101013'/%3E%3Ctext x='32' y='44' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='36' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
 <style>
@@ -126,6 +126,10 @@ footer .fine a{color:var(--brass-d)}
 .field > label{display:block;font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
 .field .hint{display:block;font-size:12.5px;line-height:1.5;color:var(--muted);margin-bottom:12px}
 .field-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.opt{display:inline-block;margin-left:7px;font-style:normal;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:500;color:var(--muted);border:1px solid var(--line);padding:2px 7px;vertical-align:1px}
+.lever .opt,.sub-lever .opt{color:var(--muted-d);border-color:var(--line-d)}
+.preset{margin:-14px 0 26px;font-size:12.5px;line-height:1.6;color:var(--muted);padding-bottom:22px;border-bottom:1px solid var(--line)}
 .field-head .val{font-size:14px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
 .money{display:flex;align-items:baseline;gap:8px;border:1px solid var(--line);border-radius:2px;padding:12px 14px;background:#FCFCFA;transition:border-color .25s,box-shadow .25s}
 .money:focus-within{border-color:var(--brass);box-shadow:0 0 0 3px rgba(168,127,61,.12)}
@@ -236,11 +240,12 @@ select:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
     <div class="calc-grid">
       <form class="calc-card reveal" id="f" novalidate>
         <span class="tag">Your numbers</span>
+        <p class="preset">Pre-filled with an example brand &mdash; £2.5m revenue, 55% margin, 114 days of stock. Type over any figure with your own.</p>
 
         <div class="field">
           <label for="rev">Annual revenue</label>
-          <span class="hint">Last twelve months, excluding VAT.</span>
-          <div class="money"><i>&pound;</i><input type="number" id="rev" value="2500000" min="0" step="10000" inputmode="numeric"></div>
+          <span class="hint">Your last twelve months, excluding VAT.</span>
+          <div class="money"><i>&pound;</i><input class="num" type="text" id="rev" value="2,500,000" inputmode="numeric" autocomplete="off" data-step="10000"></div>
         </div>
 
         <div class="field">
@@ -252,18 +257,18 @@ select:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
         <div class="field">
           <label for="stock">Stock on hand, at cost</label>
           <span class="hint">What the inventory in your warehouse cost you.</span>
-          <div class="money"><i>&pound;</i><input type="number" id="stock" value="350000" min="0" step="5000" inputmode="numeric"></div>
+          <div class="money"><i>&pound;</i><input class="num" type="text" id="stock" value="350,000" inputmode="numeric" autocomplete="off" data-step="5000"></div>
         </div>
 
         <div class="field">
-          <div class="field-head"><label for="sup">Supplier credit</label><span class="val" id="supOut">30 days</span></div>
-          <span class="hint">Days between goods arriving and you paying. Zero if you pay up front.</span>
+          <div class="field-head"><label for="sup">Supplier payment terms</label><span class="val" id="supOut">30 days</span></div>
+          <span class="hint">How long after goods arrive before you pay. Drag to zero if you pay up front.</span>
           <input type="range" id="sup" min="0" max="120" step="5" value="30">
         </div>
 
         <div class="field">
-          <label for="settle">Time to get paid</label>
-          <span class="hint">From customer checkout to cash in your account.</span>
+          <label for="settle">How quickly you get paid</label>
+          <span class="hint">From the sale to the cash landing in your account. Pick the closest match.</span>
           <select id="settle">
             <option value="3">Own site, card &amp; wallet &mdash; about 3 days</option>
             <option value="14">Amazon or marketplace &mdash; about 14 days</option>
@@ -301,10 +306,10 @@ select:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 
         <div class="lever">
           <div class="field-head">
-            <label for="cut">If you took days out of the stock cycle</label>
+            <label for="cut">What if you held less stock? <em class="opt">optional</em></label>
             <span class="pill"><strong id="cutOut">15</strong> days</span>
           </div>
-          <span class="hint">Tighter buying, faster-selling lines, shorter lead times. Drag to model it.</span>
+          <span class="hint">Drag to see what tighter buying, faster-selling lines or shorter lead times would free up.</span>
           <input type="range" id="cut" min="0" max="60" step="1" value="15">
           <div class="ticks"><span>0 days</span><span>30</span><span>60 days</span></div>
           <div class="release">
@@ -313,7 +318,7 @@ select:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
           </div>
           <div class="sub-lever">
             <div class="field-head">
-              <label for="rate">Your cost of borrowing</label>
+              <label for="rate">Your cost of borrowing <em class="opt">optional</em></label>
               <span class="pill"><strong id="rateOut">10</strong>% a year</span>
             </div>
             <span class="hint">Overdraft, trade finance or revenue-based funding &mdash; drag it to your facility rate.</span>
@@ -389,8 +394,8 @@ select:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
   }
 
   function model(){
-    var rev=Math.max(0,+$('rev').value||0), gm=(+$('gm').value||0)/100,
-        stock=Math.max(0,+$('stock').value||0), supDays=+$('sup').value||0,
+    var rev=Math.max(0,numOf('rev')), gm=(+$('gm').value||0)/100,
+        stock=Math.max(0,numOf('stock')), supDays=+$('sup').value||0,
         setDays=+$('settle').value||0, cut=+$('cut').value||0, rate=(+$('rate').value||0)/100;
     var cogs=rev*(1-gm), dailyCogs=cogs/365, dailyRev=rev/365;
     var invDays=dailyCogs>0?stock/dailyCogs:0;
@@ -458,6 +463,36 @@ select:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
       +'?subject='+encodeURIComponent('Cash cycle \u2014 '+gbpShort(m.trapped)+' held over '+Math.round(m.ccc)+' days')
       +'&body='+encodeURIComponent(body);
   }
+
+
+  /* ---- readable number fields: 250000 shows as 250,000 ---- */
+  function numOf(id){ var el=$(id); return el?(parseFloat(String(el.value).replace(/[^0-9.]/g,''))||0):0; }
+  function fmtField(el){
+    var digits=el.value.replace(/[^\d]/g,'');
+    var caretDigits=null;
+    try{ if(el.selectionStart!=null) caretDigits=el.value.slice(0,el.selectionStart).replace(/[^\d]/g,'').length; }catch(e){}
+    var out=digits?Number(digits).toLocaleString('en-GB'):'';
+    if(out===el.value) return;
+    el.value=out;
+    if(caretDigits!=null){
+      var pos=0,seen=0;
+      while(pos<out.length&&seen<caretDigits){ if(/\d/.test(out.charAt(pos))) seen++; pos++; }
+      try{ el.setSelectionRange(pos,pos); }catch(e){}
+    }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('input.num'),function(el){
+    fmtField(el);
+    el.addEventListener('input',function(){ fmtField(el); });
+    el.addEventListener('keydown',function(e){
+      if(e.key!=='ArrowUp'&&e.key!=='ArrowDown') return;
+      e.preventDefault();
+      var step=+el.getAttribute('data-step')||1;
+      var v=parseFloat(el.value.replace(/[^0-9.]/g,''))||0;
+      v=Math.max(0,v+(e.key==='ArrowUp'?step:-step));
+      el.value=Number(v).toLocaleString('en-GB');
+      render();
+    });
+  });
 
   ['rev','gm','stock','sup','settle','cut','rate'].forEach(function(id){
     $(id).addEventListener('input',render); $(id).addEventListener('change',render);

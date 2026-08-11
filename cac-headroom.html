@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How hard can you push your nCPA? &mdash; Praevo Partners</title>
-<meta name="description" content="Your cohort curve sets your acquisition ceiling, not your first-order margin. Work out the nCPA you can afford at any payback month, and the revenue growth it unlocks. A free tool from Praevo Partners — fractional CFOs and growth advisors for DTC and e-commerce brands.">
+<meta name="description" content="Your cohort curve sets your acquisition ceiling, not your first-order margin. Work out the nCPA you can afford at any payback month, and the revenue growth it unlocks. A free tool from Praevo Partners — fractional CFOs and growth advisors for consumer brands.">
 <meta name="theme-color" content="#101013">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23101013'/%3E%3Ctext x='32' y='44' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='36' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
 <style>
@@ -117,6 +117,10 @@ h2{font-size:clamp(30px,4.2vw,48px);font-weight:600;letter-spacing:-.015em;margi
 .field > label{display:block;font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
 .field .hint{display:block;font-size:12.5px;line-height:1.5;color:var(--muted);margin-bottom:12px}
 .field-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.opt{display:inline-block;margin-left:7px;font-style:normal;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:500;color:var(--muted);border:1px solid var(--line);padding:2px 7px;vertical-align:1px}
+.lever .opt,.sub-lever .opt{color:var(--muted-d);border-color:var(--line-d)}
+.preset{margin:-14px 0 26px;font-size:12.5px;line-height:1.6;color:var(--muted);padding-bottom:22px;border-bottom:1px solid var(--line)}
 .money{display:flex;align-items:baseline;gap:8px;border:1px solid var(--line);border-radius:2px;padding:12px 14px;background:#FCFCFA;transition:border-color .25s,box-shadow .25s}
 .money:focus-within{border-color:var(--brass);box-shadow:0 0 0 3px rgba(168,127,61,.12)}
 .money > i{font-style:normal;color:var(--muted);font-size:16px}
@@ -187,11 +191,26 @@ td{color:var(--muted-d)}
 .outcome .num.up{color:var(--brass-d)}
 .outcome .lbl{font-size:13px;color:var(--muted-d);max-width:26ch;text-align:right}
 .assumption{margin-top:20px;font-size:12px;line-height:1.6;color:var(--muted-d)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-d);border:1px solid var(--line-d);margin-top:28px}
+.metric{background:var(--ink-2);padding:20px 18px}
+.metric .k{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-d);font-weight:500}
+.metric .v{display:block;margin-top:8px;font-size:clamp(20px,2.6vw,24px);font-weight:600;color:#fff;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.metric .n{display:block;margin-top:7px;font-size:11.5px;line-height:1.5;color:var(--muted-d)}
+.chip{display:inline-block;margin-top:8px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+  padding:4px 9px;border:1px solid currentColor}
+.chip-strong{color:#9AD0AF}
+.chip-ok{color:#E8E7E1}
+.chip-thin{color:#F0AE9F}
+@media (max-width:620px){.metrics{grid-template-columns:1fr}}
+details.how{margin-top:14px;font-size:12.5px;color:var(--muted)}
+details.how summary{cursor:pointer;color:var(--brass-ink);font-weight:500}
+details.how p{margin-top:10px;line-height:1.65}
+details.how ul{margin:8px 0 0 18px;line-height:1.65}
 .calc-panel .btn{display:block;text-align:center;margin-top:30px}
 .calc-panel .cta-note{margin-top:14px;font-size:12px;line-height:1.6;color:var(--muted-d);text-align:center}
 
 /* ---------- explainer cards ---------- */
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-d);border:1px solid var(--line-d);margin-top:40px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-d);border:1px solid var(--line-d);margin-top:40px}
 .card{background:var(--ink-2);padding:34px 30px}
 .card h3{font-size:18px;font-weight:500;color:#fff;margin-bottom:12px}
 .card p{font-size:14px;line-height:1.65;color:var(--muted-d)}
@@ -247,51 +266,88 @@ footer .fine a{color:var(--brass-d)}
     <div class="calc-grid">
       <form class="calc-card reveal" id="f" novalidate>
         <span class="tag">Your numbers</span>
+        <p class="preset">Pre-filled with the same example brand as our cash-cycle tool &mdash; roughly £2.5m of revenue at 55% margin. Type over any figure with your own.</p>
 
         <div class="field">
           <label for="aov">Average order value</label>
           <span class="hint">Excluding VAT and shipping income.</span>
-          <div class="money"><i>&pound;</i><input type="number" id="aov" value="65" min="1" step="1" inputmode="numeric"></div>
+          <div class="money"><i>&pound;</i><input class="num" type="text" id="aov" value="65" inputmode="numeric" autocomplete="off" data-step="1"></div>
         </div>
 
         <div class="field">
-          <div class="field-head"><label for="gm">Gross margin</label><span class="pill"><strong id="gmOut">60</strong>%</span></div>
+          <div class="field-head"><label for="gm">Gross margin</label><span class="pill"><strong id="gmOut">55</strong>%</span></div>
           <span class="hint">Revenue less landed product and shipping costs &mdash; before marketing.</span>
-          <input type="range" id="gm" min="10" max="90" step="1" value="60">
+          <input type="range" id="gm" min="10" max="90" step="1" value="55">
           <div class="ticks"><span>10%</span><span>50%</span><span>90%</span></div>
         </div>
 
         <div class="field">
-          <label for="cac">What you pay today for a new customer</label>
-          <span class="hint">Your nCPA or CAC &mdash; total acquisition spend divided by new customers.</span>
-          <div class="money"><i>&pound;</i><input type="number" id="cac" value="45" min="0" step="1" inputmode="numeric"></div>
+          <label for="cac">What you pay today for one new customer</label>
+          <span class="hint">Your nCPA: ad spend divided by new customers. Just the ad platforms &mdash; the rest goes in the next box.</span>
+          <div class="money"><i>&pound;</i><input class="num" type="text" id="cac" value="45" inputmode="numeric" autocomplete="off" data-step="1"></div>
+        </div>
+
+        <div class="field">
+          <label for="nonacq">Other monthly marketing cost <em class="opt">optional</em></label>
+          <span class="hint">Everything the ad platforms never count in your nCPA: agency and freelance fees, creative production, tools, in-house marketing salaries, retention and CRM spend, affiliate and influencer fees.</span>
+          <div class="money"><i>&pound;</i><input class="num" type="text" id="nonacq" value="12,000" inputmode="numeric" autocomplete="off" data-step="500"></div>
         </div>
 
         <div class="field">
           <label for="cust">New customers a month</label>
-          <span class="hint">First-time buyers, at today&rsquo;s spend.</span>
-          <div class="money"><i>#</i><input type="number" id="cust" value="1200" min="0" step="50" inputmode="numeric"></div>
+          <span class="hint">First-time buyers you win in a typical month at today&rsquo;s spend.</span>
+          <div class="money"><i>#</i><input class="num" type="text" id="cust" value="1,800" inputmode="numeric" autocomplete="off" data-step="50"></div>
         </div>
 
         <div class="field">
-          <div class="field-head"><label for="ord">Orders per customer, first 12 months</label><span class="pill"><strong id="ordOut">1.80</strong></span></div>
-          <span class="hint">From your cohort report. 1.00 means nobody comes back; 2.00 means the average customer buys twice.</span>
+          <div class="field-head"><label for="ord">Orders per customer in their first year</label><span class="pill"><strong id="ordOut">1.80</strong></span></div>
+          <span class="hint">1.00 means nobody ever comes back. 2.00 means the average customer buys twice. If you are not sure, your cohort or repeat-rate report will have it.</span>
           <input type="range" id="ord" min="1" max="4" step="0.05" value="1.8">
           <div class="ticks"><span>1.00</span><span>2.50</span><span>4.00</span></div>
         </div>
 
         <div class="field">
-          <div class="field-head"><label for="elast">How fast the auction punishes you</label><span class="pill">+<strong id="elastOut">10</strong>% cost per 10% volume</span></div>
-          <span class="hint">Buying more customers costs more per customer. Set how much more &mdash; at 10% the trade is one-for-one, higher means scale gets expensive fast.</span>
+          <div class="field-head"><label for="elast">Diminishing returns <em class="opt">optional</em></label><span class="pill">+<strong id="elastOut">10</strong>% cost per 10% more customers</span></div>
+          <span class="hint">Every extra customer costs a little more than the last. This sets how quickly that bites. Leave it at 10% if you have never measured it.</span>
           <input type="range" id="elast" min="4" max="30" step="1" value="10">
-          <div class="ticks"><span>+4% cheap to scale</span><span>+30% brutal</span></div>
+          <div class="ticks"><span>+4% easy to scale</span><span>+30% hard to scale</span></div>
+          <details class="how">
+            <summary>How do I know my number?</summary>
+            <p>Compare two periods of your own data: the percentage change in new customers against the percentage change in nCPA. If customers rose 20% while nCPA rose 15%, that is roughly 7.5% per 10% &mdash; set the slider to 7 or 8.</p>
+            <p>It matters because it decides how much extra volume your headroom actually buys:</p>
+            <ul>
+              <li><strong>+10%</strong> &mdash; one for one. Afford 36% more, buy 36% more customers.</li>
+              <li><strong>+4%</strong> &mdash; cheap to scale. That same 36% buys well over double the volume.</li>
+              <li><strong>+30%</strong> &mdash; hard to scale. The same 36% buys barely a tenth more.</li>
+            </ul>
+            <p>If you have never measured it, leave it at 10%. It is the honest middle, and it is the number we would challenge first in a working session.</p>
+          </details>
         </div>
       </form>
 
       <div class="calc-panel reveal">
-        <span class="tag">What you can afford to pay</span>
-        <div class="headline-num" aria-live="polite" id="afford">&pound;61</div>
+        <span class="tag">What you can afford to bid</span>
+        <div class="headline-num" aria-live="polite" id="afford">&pound;49</div>
         <p class="headline-sub" id="affordSub"></p>
+
+        <div class="metrics">
+          <div class="metric">
+            <span class="k">True CAC today</span>
+            <span class="v" id="mTrue">&pound;52</span>
+            <span class="n" id="mTrueNote"></span>
+          </div>
+          <div class="metric">
+            <span class="k">LTV : CAC</span>
+            <span class="v" id="mRatio">1.2 : 1</span>
+            <span class="chip" id="mChip">Tight</span>
+            <span class="n">12-month contribution per customer against true CAC.</span>
+          </div>
+          <div class="metric">
+            <span class="k">Payback</span>
+            <span class="v" id="mPayback">month 5</span>
+            <span class="n" id="mPaybackNote"></span>
+          </div>
+        </div>
 
         <div class="chart-wrap">
           <div class="chart-head"><span>Cumulative contribution per customer</span><span id="chartScale"></span></div>
@@ -303,7 +359,7 @@ footer .fine a{color:var(--brass-d)}
           <div class="legend">
             <span><i class="lg-base"></i>Your cohorts today</span>
             <span><i class="lg-imp"></i>With better retention</span>
-            <span><i class="lg-cac"></i>What you pay today</span>
+            <span><i class="lg-cac"></i>True CAC today</span>
           </div>
           <details class="table">
             <summary>See the monthly numbers</summary>
@@ -328,20 +384,20 @@ footer .fine a{color:var(--brass-d)}
 
         <div class="lever">
           <div class="field-head">
-            <label for="up">If your cohorts got better</label>
+            <label for="up">What if retention improved? <em class="opt">optional</em></label>
             <span class="pill">+<strong id="upOut">15</strong>% orders per customer</span>
           </div>
-          <span class="hint">Subscription, replenishment prompts, a second product they actually want.</span>
+          <span class="hint">A subscription, replenishment prompts, or a second product they actually want.</span>
           <input type="range" id="up" min="0" max="60" step="5" value="15">
           <div class="ticks"><span>as is</span><span>+30%</span><span>+60%</span></div>
         </div>
 
         <div class="outcome" style="margin-top:32px">
-          <span class="num up" id="growth">&pound;0</span>
+          <span class="num up" id="growth">+&pound;245.2k</span>
           <span class="lbl" id="growthLbl">a year of extra revenue from pushing nCPA to the ceiling</span>
         </div>
         <div class="outcome">
-          <span class="num" id="upside">&pound;0</span>
+          <span class="num" id="upside">+&pound;858k</span>
           <span class="lbl" id="upsideLbl">on top of that, from the better cohorts</span>
         </div>
         <p class="assumption" id="assume"></p>
@@ -366,6 +422,10 @@ footer .fine a{color:var(--brass-d)}
       <div class="card">
         <h3>Retention is acquisition budget</h3>
         <p>Every extra order per customer lands straight on the ceiling. That is why a retention win is not a nice-to-have &mdash; it is permission to outbid people who sell the same thing you do.</p>
+      </div>
+      <div class="card">
+        <h3>nCPA is not your CAC</h3>
+        <p>Agency fees, creative, tools, salaries and retention spend never appear in the platform&rsquo;s number. Load them in and the ceiling you are really bidding against moves — usually by more than founders expect.</p>
       </div>
       <div class="card">
         <h3>Cash decides whether you can</h3>
@@ -411,7 +471,7 @@ footer .fine a{color:var(--brass-d)}
   var EMAIL='nick@praevopartners.com,karl@praevopartners.com';
   var DECAY=0.82;           /* repeat orders decay month on month */
   var VOL_CAP=5;            /* sanity ceiling on modelled volume uplift */
-  var IDS=['aov','gm','cac','cust','ord','elast','month','up'];
+  var IDS=['aov','gm','cac','nonacq','cust','ord','elast','month','up'];
 
   function gbp(n){ return '£'+Math.round(n).toLocaleString('en-GB'); }
   function gbpShort(n){
@@ -431,25 +491,33 @@ footer .fine a{color:var(--brass-d)}
   }
 
   function model(){
-    var aov=Math.max(0,+$('aov').value||0), gm=(+$('gm').value||0)/100,
-        cac=Math.max(0,+$('cac').value||0), cust=Math.max(0,+$('cust').value||0),
-        ord=+$('ord').value||1, elast=+$('elast').value||10,
+    var aov=Math.max(0,numOf('aov')), gm=(+$('gm').value||0)/100,
+        cac=Math.max(0,numOf('cac')), cust=Math.max(0,numOf('cust')),
+        ord=+$('ord').value||1, elast=+$('elast').value||10, nonacq=Math.max(0,numOf('nonacq')),
         month=+$('month').value||1, up=(+$('up').value||0)/100;
     var cpo=aov*gm, ordI=ord*(1+up), e=elast/10;
     var oBase=cumOrders(ord), oImp=cumOrders(ordI);
     var base=oBase.map(function(o){return o*cpo;}), imp=oImp.map(function(o){return o*cpo;});
-    var afford=base[month-1], affordImp=imp[month-1];
+    /* non-acquisition marketing loaded per new customer turns nCPA into true CAC */
+    var loading=cust>0?nonacq/cust:0, trueCAC=cac+loading;
+    var ceiling=base[month-1], ceilingImp=imp[month-1];
+    /* the ceiling has to cover the loading too, so only what is left can go to the platform */
+    var afford=Math.max(0,ceiling-loading), affordImp=Math.max(0,ceilingImp-loading);
+    var ltv=base[11], ltvImp=imp[11];
+    var ltvCac=trueCAC>0?ltv/trueCAC:0, ltvCacImp=trueCAC>0?ltvImp/trueCAC:0;
     function vol(a){
       if(cac<=0||a<=0) return 0;
       return Math.max(0,Math.min(VOL_CAP,Math.pow(a/cac,1/e)));
     }
     var vM=vol(afford), vMI=vol(affordImp);
     var payback=0;
-    for(var i=0;i<12;i++){ if(base[i]>=cac){ payback=i+1; break; } }
+    for(var i=0;i<12;i++){ if(base[i]>=trueCAC){ payback=i+1; break; } }
     var annual=cust*12*ord*aov;
     var annualPush=cust*vM*12*ord*aov;
     var annualImp=cust*vMI*12*ordI*aov;
-    return {aov:aov,gm:gm,cac:cac,cust:cust,ord:ord,ordI:ordI,elast:elast,month:month,up:up,
+    return {aov:aov,gm:gm,cac:cac,cust:cust,ord:ord,ordI:ordI,elast:elast,month:month,up:up,nonacq:nonacq,
+            loading:loading,trueCAC:trueCAC,ceiling:ceiling,ceilingImp:ceilingImp,ltv:ltv,ltvImp:ltvImp,
+            ltvCac:ltvCac,ltvCacImp:ltvCacImp,
             cpo:cpo,oBase:oBase,oImp:oImp,base:base,imp:imp,afford:afford,affordImp:affordImp,
             vM:vM,vMI:vMI,payback:payback,annual:annual,annualPush:annualPush,annualImp:annualImp,
             capped:(vM>=VOL_CAP||vMI>=VOL_CAP)};
@@ -465,7 +533,7 @@ footer .fine a{color:var(--brass-d)}
   }
   function draw(m){
     var svg=$('chart'); svg.textContent='';
-    var top=Math.max(m.imp[11],m.cac,1)*1.14;
+    var top=Math.max(m.imp[11],m.trueCAC,1)*1.14;
     var yAt=function(v){ return GEO.T+(1-v/top)*(GEO.H-GEO.T-GEO.B); };
     var base0=yAt(0);
 
@@ -500,12 +568,12 @@ footer .fine a{color:var(--brass-d)}
     svg.appendChild(svgEl('path',{d:d,fill:'url(#g1)'}));
 
     /* what you pay today — annotation */
-    if(m.cac>0&&m.cac<top){
-      svg.appendChild(svgEl('line',{x1:GEO.L,x2:GEO.W-GEO.R,y1:yAt(m.cac),y2:yAt(m.cac),
+    if(m.trueCAC>0&&m.trueCAC<top){
+      svg.appendChild(svgEl('line',{x1:GEO.L,x2:GEO.W-GEO.R,y1:yAt(m.trueCAC),y2:yAt(m.trueCAC),
         stroke:'rgba(255,255,255,.55)','stroke-width':1,'stroke-dasharray':'2 4'}));
-      var lt=svgEl('text',{x:GEO.W-GEO.R,y:yAt(m.cac)-8,'text-anchor':'end',fill:'#E8E7E1','font-size':10.5,
+      var lt=svgEl('text',{x:GEO.W-GEO.R,y:yAt(m.trueCAC)-8,'text-anchor':'end',fill:'#E8E7E1','font-size':10.5,
         'font-family':'Poppins,Arial,sans-serif','letter-spacing':'.08em'});
-      lt.textContent='YOU PAY '+gbp(m.cac)+' TODAY'; svg.appendChild(lt);
+      lt.textContent='TRUE CAC '+gbp(m.trueCAC); svg.appendChild(lt);
     }
 
     /* better-retention curve (dashed) */
@@ -583,11 +651,30 @@ footer .fine a{color:var(--brass-d)}
     /* headline */
     $('afford').textContent=gbp(m.afford);
     var head=m.afford>=m.cac
-      ? 'That is what a customer has paid you back by <b>month '+m.month+'</b>, so that is what you could pay to acquire one. You pay <b>'+gbp(m.cac)
-        +'</b> today &mdash; <b>'+gbp(m.afford-m.cac)+' of headroom</b> per customer.'
-      : 'A customer has only paid you back <b>'+gbp(m.afford)+'</b> by month '+m.month+', and you are paying <b>'+gbp(m.cac)
-        +'</b> to acquire one. On this window you are <span class="warn">'+gbp(m.cac-m.afford)+' underwater</span> per customer.';
+      ? (m.loading<0.5
+      ? 'That is what a customer has paid you back by <b>month '+m.month+'</b>, and with no other marketing cost loaded in it is all available to bid. You bid <b>'+gbp(m.cac)+'</b> today &mdash; <b>'+gbp(m.afford-m.cac)+' of headroom</b>.'
+      : 'A customer has paid you back <b>'+gbp(m.ceiling)+'</b> by <b>month '+m.month+'</b>. Take off <b>'+gbp(m.loading)
+        +'</b> of non-acquisition cost per customer and <b>'+gbp(m.afford)+'</b> is what you can hand the ad platforms. You bid <b>'
+        +gbp(m.cac)+'</b> today &mdash; <b>'+gbp(m.afford-m.cac)+' of headroom</b>.')
+      : 'A customer has paid you back <b>'+gbp(m.ceiling)+'</b> by month '+m.month+'. After <b>'+gbp(m.loading)
+        +'</b> of non-acquisition cost that leaves <b>'+gbp(m.afford)+'</b> to bid, against the <b>'+gbp(m.cac)
+        +'</b> you pay today &mdash; <span class="warn">'+gbp(m.cac-m.afford)+' underwater</span> per customer on this window.';
     $('affordSub').innerHTML=head;
+
+    /* metric tiles */
+    $('mTrue').textContent=gbp(m.trueCAC);
+    $('mTrueNote').textContent=m.loading>0
+      ? gbp(m.cac)+' nCPA plus '+gbp(m.loading)+' a customer of marketing cost the platforms never see.'
+      : 'Same as your nCPA — nothing else loaded in.';
+    $('mRatio').textContent=(m.ltvCac?m.ltvCac.toFixed(1):'0.0')+' : 1';
+    var chip=$('mChip'), r=m.ltvCac;
+    var band = r<1 ? ['Underwater','chip-thin'] : r<2 ? ['Tight','chip-thin']
+             : r<3 ? ['Workable','chip-ok'] : ['Strong','chip-strong'];
+    chip.textContent=band[0]; chip.className='chip '+band[1];
+    $('mPayback').textContent=m.payback?('month '+m.payback):'beyond 12';
+    $('mPaybackNote').textContent=m.payback
+      ? 'When a customer has repaid your true CAC of '+gbp(m.trueCAC)+'.'
+      : 'A customer has not repaid '+gbp(m.trueCAC)+' inside twelve months.';
 
     draw(m); renderTable(m);
 
@@ -600,26 +687,30 @@ footer .fine a{color:var(--brass-d)}
     $('upside').textContent=(upside>=0?'+':'')+gbpShort(upside);
     $('upside').className='num'+(upside>0?' up':'');
     $('upsideLbl').innerHTML= m.up>0
-      ? 'more, on top, once <b>'+pc(m.up)+' better retention</b> lifts the ceiling to '+gbp(m.affordImp)
+      ? 'more, on top, once <b>'+pc(m.up)+' better retention</b> lifts what you can bid to '+gbp(m.affordImp)
+        +' and LTV:CAC to '+m.ltvCacImp.toFixed(1)+':1'
       : 'drag the retention lever to see what better cohorts add';
 
-    $('assume').textContent='Revenue is the twelve-month value of a year of cohorts at '+m.ord.toFixed(2)
-      +' orders per customer and '+gbp(m.aov)+' order value. Volume follows your efficiency curve of +'
-      +m.elast+'% cost per 10% more customers'
-      +(m.capped?', shown capped at '+VOL_CAP+'× today’s volume':'')+'.'
-      +(m.payback?' At today’s nCPA you are paid back in month '+m.payback+'.'
-                 :' At today’s nCPA you are not paid back inside twelve months.');
+    $('assume').textContent='LTV here is twelve-month gross contribution per customer, not revenue, and it is not discounted. '
+      +'Revenue is the twelve-month value of a year of cohorts at '+m.ord.toFixed(2)+' orders per customer and '+gbp(m.aov)
+      +' order value. Non-acquisition cost is held flat at '+gbp(m.loading)+' a customer; in practice it falls as you scale, so this is the conservative read. '
+      +'Volume follows your efficiency curve of +'+m.elast+'% cost per 10% more customers'
+      +(m.capped?', shown capped at '+VOL_CAP+'× today’s volume':'')+'.';
 
     /* prefilled enquiry */
     var body=['Hi Nick and Karl,','',
       'I ran the nCPA headroom calculator on praevopartners.com. My figures:','',
       'Average order value: '+gbp(m.aov),
       'Gross margin: '+Math.round(m.gm*100)+'%',
-      'What I pay today for a new customer: '+gbp(m.cac),
+      'What I pay today for a new customer (nCPA): '+gbp(m.cac),
+      'Other monthly marketing cost: '+gbp(m.nonacq),
       'New customers a month: '+Math.round(m.cust).toLocaleString('en-GB'),
       'Orders per customer over 12 months: '+m.ord.toFixed(2),'',
       'Which gives:',
-      'Affordable nCPA at month '+m.month+': '+gbp(m.afford),
+      'True CAC today: '+gbp(m.trueCAC)+' ('+gbp(m.cac)+' nCPA + '+gbp(m.loading)+' loaded)',
+      'LTV to CAC (12-month contribution): '+m.ltvCac.toFixed(1)+' : 1',
+      'Contribution per customer by month '+m.month+': '+gbp(m.ceiling),
+      'Affordable nCPA bid at month '+m.month+': '+gbp(m.afford),
       'Headroom per customer: '+gbp(m.afford-m.cac),
       'Payback at today’s nCPA: '+(m.payback?'month '+m.payback:'beyond 12 months'),
       'Extra revenue from pushing to the ceiling: '+gbp(growth),
@@ -629,6 +720,36 @@ footer .fine a{color:var(--brass-d)}
       +'?subject='+encodeURIComponent('nCPA headroom — '+gbp(m.afford)+' affordable vs '+gbp(m.cac)+' today')
       +'&body='+encodeURIComponent(body);
   }
+
+
+  /* ---- readable number fields: 250000 shows as 250,000 ---- */
+  function numOf(id){ var el=$(id); return el?(parseFloat(String(el.value).replace(/[^0-9.]/g,''))||0):0; }
+  function fmtField(el){
+    var digits=el.value.replace(/[^\d]/g,'');
+    var caretDigits=null;
+    try{ if(el.selectionStart!=null) caretDigits=el.value.slice(0,el.selectionStart).replace(/[^\d]/g,'').length; }catch(e){}
+    var out=digits?Number(digits).toLocaleString('en-GB'):'';
+    if(out===el.value) return;
+    el.value=out;
+    if(caretDigits!=null){
+      var pos=0,seen=0;
+      while(pos<out.length&&seen<caretDigits){ if(/\d/.test(out.charAt(pos))) seen++; pos++; }
+      try{ el.setSelectionRange(pos,pos); }catch(e){}
+    }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('input.num'),function(el){
+    fmtField(el);
+    el.addEventListener('input',function(){ fmtField(el); });
+    el.addEventListener('keydown',function(e){
+      if(e.key!=='ArrowUp'&&e.key!=='ArrowDown') return;
+      e.preventDefault();
+      var step=+el.getAttribute('data-step')||1;
+      var v=parseFloat(el.value.replace(/[^0-9.]/g,''))||0;
+      v=Math.max(0,v+(e.key==='ArrowUp'?step:-step));
+      el.value=Number(v).toLocaleString('en-GB');
+      render();
+    });
+  });
 
   IDS.forEach(function(id){
     $(id).addEventListener('input',render);
