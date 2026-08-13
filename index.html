@@ -126,17 +126,20 @@ h2{font-size:clamp(30px,4.2vw,48px);font-weight:600;letter-spacing:-.015em;margi
 
 /* ---------- imagery ---------- */
 .hero-photo{position:absolute;inset:0;z-index:0;background:url(hero-warehouse.webp) center/cover;opacity:.4}
+/* faint photography behind the dark sections — the images are greyed and dimmed in the browser,
+   so the same three files serve as both artwork and background without a second download */
+.has-bg{position:relative;overflow:hidden}
+.has-bg > .wrap{position:relative;z-index:2}
+.has-bg::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(16,16,19,.90) 0%,rgba(16,16,19,.74) 45%,rgba(16,16,19,.95) 100%)}
+.bg-photo{position:absolute;inset:0;z-index:0;background-position:center;background-size:cover;
+  filter:grayscale(1) brightness(.42) contrast(1.06);opacity:.55}
+.bg-freight{background-image:url(sector-freight.webp)}
+.bg-product{background-image:url(sector-beauty.webp)}
+.bg-3pl{background-image:url(sector-3pl.webp)}
 .hero-photo::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(16,16,19,.84) 0%,rgba(16,16,19,.70) 44%,rgba(16,16,19,.97) 100%)}
 
-.sector-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}
-.sector-strip figure{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--ink-2);min-width:0}
-.sector-strip img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.22,.61,.36,1)}
-.sector-strip figure:hover img{transform:scale(1.04)}
-.sector-strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 16px 13px;color:#fff;
-  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
-  background:linear-gradient(180deg,transparent,rgba(16,16,19,.9))}
-@media (max-width:700px){.sector-strip{grid-template-columns:1fr 1fr;gap:10px}.sector-strip figure:last-child{grid-column:span 2;aspect-ratio:2/1}}
 
 .case-pic{height:150px;margin:-42px -38px 26px;background-position:center;background-size:cover}
 .case-pic.turnaround{background-image:url(case-turnaround.webp)}
@@ -470,7 +473,8 @@ footer .fine{width:100%;margin-top:30px;padding-top:26px;border-top:1px solid va
     </div>
   </section>
 
-  <section class="dark" id="approach">
+  <section class="dark has-bg" id="approach">
+    <div class="bg-photo bg-freight" aria-hidden="true"></div>
     <div class="wrap">
       <span class="eyebrow reveal">How we deliver success</span>
       <h2 class="reveal">Solid foundations. Then finance becomes a competitive advantage.</h2>
@@ -632,16 +636,11 @@ footer .fine{width:100%;margin-top:30px;padding-top:26px;border-top:1px solid va
     </div>
   </section>
 
-  <section class="dark" id="brands">
+  <section class="dark has-bg" id="brands">
+    <div class="bg-photo bg-product" aria-hidden="true"></div>
     <div class="wrap">
       <span class="eyebrow reveal">Who we work with</span>
       <h2 class="reveal">In the trenches with brands like these.</h2>
-      <div class="sector-strip stagger">
-        <figure><img src="sector-beauty.webp" alt="Skincare product still life" width="780" height="520" loading="lazy" decoding="async"><figcaption>Health, wellness &amp; beauty</figcaption></figure>
-        <figure><img src="sector-freight.webp" alt="Stacked shipping containers at a freight terminal" width="780" height="520" loading="lazy" decoding="async"><figcaption>Freight &amp; international</figcaption></figure>
-        <figure><img src="sector-3pl.webp" alt="Warehouse racking stacked with palletised stock" width="780" height="520" loading="lazy" decoding="async"><figcaption>3PL &amp; fulfilment</figcaption></figure>
-      </div>
-
       <div class="brand-marquee reveal">
         <div class="brand-track">
           <div class="set">
@@ -688,7 +687,8 @@ footer .fine{width:100%;margin-top:30px;padding-top:26px;border-top:1px solid va
     </div>
   </section>
 
-  <section class="dark contact" id="contact">
+  <section class="dark contact has-bg" id="contact">
+    <div class="bg-photo bg-3pl" aria-hidden="true"></div>
     <div class="wrap">
       <span class="eyebrow reveal">Next steps</span>
       <h2 class="reveal">Start with a conversation.</h2>
